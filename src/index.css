@@ -1,0 +1,290 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --color-primary: #3b82f6;
+  --color-secondary: #64748b;
+  --color-bg-light: #f8fafc;
+  --color-bg-dark: #050505;
+  --color-card-light: #ffffff;
+  --color-card-dark: #0f0f0f;
+}
+
+@layer base {
+  :root {
+    --bg-app: #f8fafc;
+    --card-app: #ffffff;
+    --text-app: #0f172a;
+    --border-app: #e2e8f0;
+    --sidebar-app: #ffffff;
+  }
+
+  .dark {
+    --bg-app: #050505;
+    --card-app: #0f0f0f;
+    --text-app: #cbd5e1;
+    --border-app: #1e293b;
+    --sidebar-app: #0a0a0a;
+  }
+
+  .high-contrast {
+    --bg-app: #000000 !important;
+    --card-app: #000000 !important;
+    --text-app: #ffffff !important;
+    --border-app: #ffffff !important;
+    --sidebar-app: #000000 !important;
+    --color-primary: #00ffff !important;
+  }
+
+  .font-dyslexic, .font-dyslexic * {
+    font-family: "Comic Sans MS", "Comic Sans", cursive, sans-serif !important;
+    letter-spacing: 0.1em !important;
+    word-spacing: 0.15em !important;
+    line-height: 1.6 !important;
+  }
+
+  html, body {
+    background-color: var(--bg-app) !important;
+    color: var(--text-app) !important;
+    @apply transition-colors duration-200;
+  }
+}
+
+/* HIGH CONTRAST ROBUST OVERRIDES - Fixes light/dark text visibility collisions */
+html.high-contrast,
+html.high-contrast body,
+html.high-contrast #root {
+  background-color: #000000 !important;
+  color: #ffffff !important;
+}
+
+/* Prevent any child element from retaining a light background which clashes with forced white text,
+   excluding interactive and form elements which are specifically handled below */
+html.high-contrast *:not(
+  button,
+  a,
+  .btn,
+  input[type="checkbox"],
+  input[type="radio"],
+  option,
+  select,
+  kbd,
+  code
+) {
+  background-color: #000000 !important;
+  color: #ffffff !important;
+  border-color: #ffffff !important;
+  box-shadow: none !important;
+  text-shadow: none !important;
+}
+
+/* Specific styling for all text categories to guarantee 100% white color against the black background */
+html.high-contrast p,
+html.high-contrast span,
+html.high-contrast div,
+html.high-contrast h1,
+html.high-contrast h2,
+html.high-contrast h3,
+html.high-contrast h4,
+html.high-contrast h5,
+html.high-contrast h6,
+html.high-contrast li,
+html.high-contrast label,
+html.high-contrast td,
+html.high-contrast th {
+  color: #ffffff !important;
+}
+
+/* Cards, borders, and dividers */
+html.high-contrast .card,
+html.high-contrast .border,
+html.high-contrast td,
+html.high-contrast th,
+html.high-contrast table,
+html.high-contrast tr,
+html.high-contrast hr,
+html.high-contrast [class*="border-"] {
+  border: 2px solid #ffffff !important;
+}
+
+/* Form Inputs, areas and selects */
+html.high-contrast input[type="text"],
+html.high-contrast input[type="password"],
+html.high-contrast input[type="email"],
+html.high-contrast input[type="tel"],
+html.high-contrast textarea,
+html.high-contrast select,
+html.high-contrast .input {
+  background-color: #000000 !important;
+  color: #ffffff !important;
+  border: 3px solid #ffffff !important;
+  border-radius: 8px !important;
+}
+
+html.high-contrast input[type="checkbox"],
+html.high-contrast input[type="radio"] {
+  accent-color: #00ffff !important;
+  background-color: #000000 !important;
+  border: 2px solid #ffffff !important;
+  outline: 1px solid #ffffff !important;
+}
+
+/* Interactive elements: Links and highlights */
+html.high-contrast a,
+html.high-contrast .text-primary,
+html.high-contrast .text-blue-500,
+html.high-contrast .text-blue-600,
+html.high-contrast .text-indigo-500,
+html.high-contrast .text-indigo-600,
+html.high-contrast .text-emerald-500,
+html.high-contrast .text-emerald-600,
+html.high-contrast .text-amber-500,
+html.high-contrast .text-amber-600 {
+  color: #00ffff !important;
+  text-decoration: underline !important;
+  font-weight: 700 !important;
+}
+
+html.high-contrast a *,
+html.high-contrast .text-primary *,
+html.high-contrast .text-emerald-500 *,
+html.high-contrast .text-emerald-600 * {
+  color: #00ffff !important;
+  text-decoration: underline !important;
+}
+
+/* General Button Styles */
+html.high-contrast button,
+html.high-contrast .btn {
+  background-color: #000000 !important;
+  color: #ffffff !important;
+  border: 2px solid #ffffff !important;
+  border-radius: 8px !important;
+  box-shadow: none !important;
+}
+
+html.high-contrast button *,
+html.high-contrast .btn * {
+  color: #ffffff !important;
+}
+
+/* Interactive & Hover states in High Contrast - Forces solid cyan highlight and deep black text, avoiding any inner black backgrounds */
+html.high-contrast a:hover,
+html.high-contrast a:hover *,
+html.high-contrast button:hover,
+html.high-contrast button:hover *,
+html.high-contrast .btn:hover,
+html.high-contrast .btn:hover *,
+html.high-contrast [role="button"]:hover,
+html.high-contrast [role="button"]:hover *,
+html.high-contrast .cursor-pointer:hover,
+html.high-contrast .cursor-pointer:hover *,
+html.high-contrast tr:hover,
+html.high-contrast tr:hover * {
+  background-color: #00ffff !important;
+  color: #000000 !important;
+  border-color: #ffffff !important;
+  text-decoration: underline !important;
+  cursor: pointer !important;
+}
+
+/* Primary buttons & Active widgets (Solid Cyan filled to establish contrast) */
+html.high-contrast .btn-primary,
+html.high-contrast button.btn-primary,
+html.high-contrast button[type="submit"],
+html.high-contrast .bg-primary,
+html.high-contrast .bg-primary\/20,
+html.high-contrast .bg-primary\/10 {
+  background-color: #00ffff !important;
+  color: #000000 !important;
+  border: 2px solid #ffffff !important;
+  font-weight: 800 !important;
+}
+
+html.high-contrast .btn-primary *,
+html.high-contrast button.btn-primary *,
+html.high-contrast button[type="submit"] *,
+html.high-contrast .bg-primary *,
+html.high-contrast .bg-primary\/20 *,
+html.high-contrast .bg-primary\/10 * {
+  background-color: transparent !important;
+  color: #000000 !important;
+}
+
+/* Primary buttons & Active widgets on Hover (Flips to white background to provide responsive visual feedback) */
+html.high-contrast .btn-primary:hover,
+html.high-contrast button.btn-primary:hover,
+html.high-contrast button[type="submit"]:hover,
+html.high-contrast .bg-primary:hover,
+html.high-contrast .bg-primary\/20:hover,
+html.high-contrast .bg-primary\/10:hover {
+  background-color: #ffffff !important;
+  color: #000000 !important;
+  border-color: #00ffff !important;
+}
+
+html.high-contrast .btn-primary:hover *,
+html.high-contrast button.btn-primary:hover *,
+html.high-contrast button[type="submit"]:hover *,
+html.high-contrast .bg-primary\/20:hover *,
+html.high-contrast .bg-primary\/10:hover * {
+  background-color: transparent !important;
+  color: #000000 !important;
+}
+
+/* SVGs inside High Contrast - convert all custom color borders to parent-inherited stroke/fill */
+html.high-contrast svg,
+html.high-contrast svg * {
+  stroke: currentColor !important;
+  fill: none !important;
+}
+
+/* Custom highlighted SVG stars and indicators (yellow/ratings) */
+html.high-contrast svg.fill-amber-400,
+html.high-contrast svg.fill-amber-400 *,
+html.high-contrast .fill-amber-400,
+html.high-contrast .fill-amber-400 * {
+  fill: #ffff00 !important;
+  stroke: #ffffff !important;
+}
+
+html.high-contrast .text-amber-400,
+html.high-contrast .text-amber-500 {
+  color: #ffff00 !important;
+}
+
+@layer components {
+  .card {
+    background-color: var(--card-app) !important;
+    border-color: var(--border-app) !important;
+    @apply rounded-xl shadow-sm border p-4 transition-all;
+  }
+  
+  .sidebar {
+    background-color: var(--sidebar-app) !important;
+    border-color: var(--border-app) !important;
+  }
+  
+  .btn {
+    @apply px-4 py-2 rounded-lg font-medium transition-all active:scale-95 disabled:opacity-50 disabled:pointer-events-none;
+  }
+  
+  .btn-primary {
+    @apply bg-primary text-white hover:bg-blue-600 shadow-sm;
+  }
+  
+  .btn-secondary {
+    background-color: var(--border-app) !important;
+    color: var(--text-app) !important;
+    @apply hover:opacity-80;
+  }
+  
+  .input {
+    background-color: var(--card-app) !important;
+    border-color: var(--border-app) !important;
+    color: var(--text-app) !important;
+    @apply w-full px-4 py-2 rounded-lg border focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all;
+  }
+}
