@@ -1,0 +1,84 @@
+{
+  "entities": {
+    "Notification": {
+      "title": "Notification",
+      "description": "App notifications for users.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "usuarioId": { "type": "string" },
+        "titulo": { "type": "string" },
+        "mensagem": { "type": "string" },
+        "data": { "type": "string", "format": "date-time" },
+        "lida": { "type": "boolean" },
+        "solicitacaoId": { "type": "string" }
+      },
+      "required": ["id", "usuarioId", "titulo", "mensagem", "data", "lida"]
+    },
+    "User": {
+      "title": "User",
+      "description": "User profile information.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "nome": { "type": "string" },
+        "email": { "type": "string", "format": "email" },
+        "tipo": { "type": "string", "enum": ["Estudante", "Admin"] },
+        "telefone": { "type": "string" },
+        "matricula": { "type": "string" },
+        "curso": { "type": "string" },
+        "fotoPerfil": { "type": "string" },
+        "preferenciaTema": { "type": "string", "enum": ["Claro", "Escuro"] },
+        "notificacoesAtivas": { "type": "boolean" }
+      },
+      "required": ["id", "nome", "email", "tipo"]
+    },
+    "Request": {
+      "title": "Request",
+      "description": "Academic request details.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "titulo": { "type": "string" },
+        "descricao": { "type": "string" },
+        "dataCriacao": { "type": "string", "format": "date-time" },
+        "status": { "type": "string", "enum": ["Pendente", "Em análise", "Concluída"] },
+        "prioridade": { "type": "string", "enum": ["Baixa", "Média", "Alta"] },
+        "categoria": { "type": "string", "enum": ["Acadêmico", "Financeiro", "Outros"] },
+        "usuarioId": { "type": "string" },
+        "comentarioAdmin": { "type": "string" },
+        "historico": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "data": { "type": "string", "format": "date-time" },
+              "mensagem": { "type": "string" },
+              "usuario": { "type": "string" }
+            }
+          }
+        },
+        "importante": { "type": "boolean" },
+        "arquivos": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      },
+      "required": ["id", "titulo", "descricao", "dataCriacao", "status", "prioridade", "categoria", "usuarioId"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "User profile storage."
+    },
+    "/requests/{requestId}": {
+      "schema": "Request",
+      "description": "Academic requests storage."
+    },
+    "/notifications/{notificationId}": {
+      "schema": "Notification",
+      "description": "User notifications storage."
+    }
+  }
+}

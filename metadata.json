@@ -1,0 +1,5 @@
+{
+  "name": "EduRequest",
+  "description": "Sistema de gestão de solicitações acadêmicas moderno e intuitivo.",
+  "requestFramePermissions": ["microphone"]
+}
